@@ -2,8 +2,8 @@ import os
 import amplify_slack_notifications
 
 
-# test-webhook sending to '#programming'
-WEBHOOK_URL = 'https://hooks.slack.com/services/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'
+# test-webhook sending to an empty or spammable channel
+WEBHOOK_URL = ''
 
 TEST_DATA = {
     "Records": [
