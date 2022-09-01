@@ -1,0 +1,163 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  Amplify build notifications for Slack
+
+#-----------------------------------------------------
+# Metadata
+#-----------------------------------------------------
+Metadata:
+  AWS::ServerlessRepo::Application:
+    Name: AmplifyNotifications
+    Description: Amplift build notifications for Slack
+    Author: walter@globaldatanet.com
+    SpdxLicenseId: Apache-2.0
+    LicenseUrl: '' #! add once GH repo is set up (Copy existing one)
+    ReadmeUrl: '' #! add once GH repo is set up
+    Labels:
+      - Serverless
+      - Lambda
+      - Amplify
+      - Slack
+      - Notifications
+    HomePageUrl: https://github.com/walterkopp
+    SemanticVersion: 0.1.0
+    SourceCodeUrl: '' #! add once GH repo is set up
+
+#-----------------------------------------------------
+# Parameters
+#-----------------------------------------------------
+Parameters:
+
+  # - - - Tags - - - #
+  DeployedBy:
+    Description: Deployed made by (Name)
+    Type: String
+
+  # - - - General - - - #
+  WebhookUrl:
+    Description: Webhook URL for Lambda to send notifications to
+    Type: String
+
+  MainUrl:
+    Description: Main URL of the Amplify app
+    Type: String
+
+  DevUrl:
+    Description: Dev URL of the Amplify app
+    Type: String
+
+  FallbackUrl:
+    Description: Fallback URL in case the others don't work
+    Type: String
+    Default: https://google.com/
+
+  # - - - SNS - - - #
+  SNSTopicDev:
+    Description: SNS Topic ARN to subscribe Lambda function to (DEV env)
+    Type: String
+
+  SNSTopicMain:
+    Description: SNS Topic ARN to subscribe Lambda function to (MAIN env)
+    Type: String
+
+  # - - - Lambda - - - #
+  LambdaName:
+    Description: Name for the AWS Lambda function
+    Type: String
+    Default: Amplify-Notifications-Slack
+
+  LambdaRuntime:
+    Description: Runtime for Lambda function
+    Type: String
+    Default: python3.8
+    AllowedValues:
+      - python2.7
+      - python3.6
+      - python3.7
+      - python3.8
+      - python3.9
+
+  LambdaMemory:
+    Description: Max allocalted memory (MB) for the AWS Lambda function
+    Type: String
+    Default: 128
+    # Min 128 | Max 10240
+
+  LambdaTimeout:
+    Description: Time in seconds until Lambda function runs into timeout
+    Type: Number
+    Default: 5
+    # Min 0 | Max -
+
+#-----------------------------------------------------
+# Resources
+#-----------------------------------------------------
+Resources:
+
+  SlackLambda:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Ref LambdaName
+      CodeUri: ../src/
+      Handler: amplify_slack_notifications.handler
+      Runtime: !Ref LambdaRuntime
+      MemorySize: !Ref LambdaMemory
+      Timeout: !Ref LambdaTimeout
+      Role: !GetAtt IamRoleLambdaExecution.Arn
+      Environment:
+        Variables:
+          WebhookUrl: !Ref WebhookUrl
+          MainUrl: !Ref MainUrl
+          DevUrl: !Ref DevUrl
+          FallbackUrl: !Ref FallbackUrl
+      Events:
+        AmplifyAppDevSns:
+          Type: SNS
+          Properties:
+            Topic: !Ref SNSTopicDev
+        AmplifyAppMainSns:
+          Type: SNS
+          Properties:
+            Topic: !Ref SNSTopicMain
+      Tags:
+        DeployedBy: !Ref DeployedBy
+        ManagedBy: AWS SAM
+
+  IamRoleLambdaExecution:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub '${LambdaName}-Lambda-role'
+      ManagedPolicyArns:
+        - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Policies:
+        - PolicyName: !Sub '${LambdaName}-Logging'
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogStream
+                  - logs:CreateLogGroup
+                Resource: !Sub 'arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${LambdaName}*:*'
+              - Effect: Allow
+                Action: logs:PutLogEvents
+                Resource: !Sub 'arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${LambdaName}*:*:*'
+
+#-----------------------------------------------------
+# Outputs
+#-----------------------------------------------------
+Outputs:
+
+  LambdaArn:
+    Description: ARN of the Lambda function
+    Value: !GetAtt SlackLambda.Arn
