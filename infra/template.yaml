@@ -12,8 +12,8 @@ Metadata:
     Description: Amplift build notifications for Slack
     Author: walter@globaldatanet.com
     SpdxLicenseId: Apache-2.0
-    LicenseUrl: '' #! add once GH repo is set up (Copy existing one)
-    ReadmeUrl: '' #! add once GH repo is set up
+    LicenseUrl: 'https://github.com/walterkopp/Amplify-build-notifications/blob/main/LICENSE'
+    ReadmeUrl: 'https://github.com/walterkopp/Amplify-build-notifications/tree/main#readme'
     Labels:
       - Serverless
       - Lambda
@@ -22,7 +22,7 @@ Metadata:
       - Notifications
     HomePageUrl: https://github.com/walterkopp
     SemanticVersion: 0.1.0
-    SourceCodeUrl: '' #! add once GH repo is set up
+    SourceCodeUrl: 'https://github.com/walterkopp/Amplify-build-notifications'
 
 #-----------------------------------------------------
 # Parameters
