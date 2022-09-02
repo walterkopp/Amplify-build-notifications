@@ -9,7 +9,7 @@ Well here you go!
 
 ![Slack preview](.assets/slack_preview.png)
 
-> ℹ️ MS Teams coming soon
+> ℹ MS Teams coming soon
 
 ## Table of contents
 
@@ -46,6 +46,8 @@ Well here you go!
 - IAM role
   - Lambda execution & logging
 
+> ℹ Note: The `aws-sam-cli-managed-default` bucket & CF stack are created using `sam deploy --guided` and managed by AWS SAM. This is required in order to store the CF stack template + packaged / compiled Lambda code
+
 ## Installation
 
 ### Slack
@@ -62,7 +64,7 @@ In order to use notifications for Slack, follow these steps to create an **incom
 
 ### MS Teams (coming soon)
 
-...
+Loading... ↺
 
 ## Deployment
 
