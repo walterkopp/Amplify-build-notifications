@@ -7,7 +7,9 @@
 Ever wanted simple yet cool AWS Amplify build notifications in Slack?
 Well here you go!
 
-(Insert preview)
+![Slack preview](.assets/slack_preview.png)
+
+> MS Teams coming soon
 
 ## Table of contents
 
@@ -30,7 +32,7 @@ Well here you go!
 
 ## Architecture
 
-(Insert Diagram)
+![Architecture](.assets/amplify-notifications-architecture.png)
 
 ## Resources
 
