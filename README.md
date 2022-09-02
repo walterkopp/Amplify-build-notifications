@@ -9,7 +9,7 @@ Well here you go!
 
 ![Slack preview](.assets/slack_preview.png)
 
-> MS Teams coming soon
+> ℹ️ MS Teams coming soon
 
 ## Table of contents
 
@@ -36,13 +36,29 @@ Well here you go!
 
 ## Resources
 
-(List of resources created)
+- CloudFormation stacks
+  - `aws-sam-cli-managed-default`
+  - amplify-notifications
+- S3 Buckets
+  - `aws-sam-cli-managed-default`
+- Lambda
+  - Language: `python`
+- IAM role
+  - Lambda execution & logging
 
 ## Installation
 
 ### Slack
 
-(Insert how to create slack app) w/ basics
+In order to use notifications for Slack, follow these steps to create an **incoming webhook**:
+
+[Incoming webhooks for Slack](https://slack.com/help/articles/115005265063-Incoming-webhooks-for-Slack)
+
+1. [Create a new Slack app](https://api.slack.com/apps/new) in your workspace
+2. From the Features page, toggle **Activate Incoming Webhooks** on
+3. Click **Add New Webhook to Workspace**
+4. Pick a channel that the app will post to, then click **Authorize**
+5. Reference the Webhook URL in the `WebhookUrl` parameter when [deploying with AWS SAM](#deployment)
 
 ### MS Teams (coming soon)
 
