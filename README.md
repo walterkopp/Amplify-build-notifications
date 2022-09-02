@@ -7,6 +7,28 @@
 Ever wanted simple yet cool AWS Amplify build notifications in Slack?
 Well here you go!
 
+## Table of contents
+
+<details>
+  <summary>Click to expand!</summary>
+
+- [Amplify Slack Notifications](#amplify-slack-notifications)
+  - [Table of contents](#table-of-contents)
+  - [Previews](#previews)
+  - [Architecture](#architecture)
+  - [Resources](#resources)
+  - [Installation](#installation)
+    - [Slack](#slack)
+    - [MS Teams (coming soon)](#ms-teams-coming-soon)
+  - [Deployment](#deployment)
+    - [Prerequisites](#prerequisites)
+    - [Makefile](#makefile)
+    - [Cleanup](#cleanup)
+
+</details>
+
+## Previews
+
 <details>
   <summary>Slack previews</summary>
 
@@ -20,25 +42,6 @@ Well here you go!
   <summary>MS Teams previews</summary>
 
 > ℹ coming soon
-
-</details>
-
-## Table of contents
-
-<details>
-  <summary>Click to expand!</summary>
-
-- [Amplify Slack Notifications](#amplify-slack-notifications)
-  - [Table of contents](#table-of-contents)
-  - [Architecture](#architecture)
-  - [Resources](#resources)
-  - [Installation](#installation)
-    - [Slack](#slack)
-    - [MS Teams (coming soon)](#ms-teams-coming-soon)
-  - [Deployment](#deployment)
-    - [Prerequisites](#prerequisites)
-    - [Makefile](#makefile)
-    - [Cleanup](#cleanup)
 
 </details>
 
