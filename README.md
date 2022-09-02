@@ -4,7 +4,7 @@
 
 # Amplify Slack Notifications
 
-Ever wanted simple yet cool AWS Amplify build notifications in Slack?
+Ever wanted simple yet cool AWS Amplify build notifications in Slack or MS Teams?
 Well here you go!
 
 ## Table of contents
