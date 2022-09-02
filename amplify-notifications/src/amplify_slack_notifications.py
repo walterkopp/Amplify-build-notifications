@@ -41,7 +41,7 @@ def build_message_data(event: dict) -> dict:
 
     # Needed to deconstruct
     timestamp  = re.split('T|Z', event['Records'][0]['Sns']['Timestamp'])
-    arn_string = re.findall(r'arn:aws:sns:(\S+):', sns_topic_arn)[0].split(':') # needed to deconstruct
+    arn_string = re.findall(r'arn:aws:sns:(\S+):', sns_topic_arn)[0].split(':')
 
 
     # * Structure data from event
@@ -53,6 +53,8 @@ def build_message_data(event: dict) -> dict:
     event_time_timestamp = timestamp[1]
     event_time           = f'{timestamp[0]} {event_time_timestamp[:-4]}'
     app_env              = re.search(r'arn:aws:sns:[\S]+:amplify-[\S]+_(\S+)', sns_topic_arn).group(1)
+    amplify_id           = re.search(r'arn:aws:sns:[\S]+:amplify-(\S+)_', sns_topic_arn).group(1)
+    amplify_build_url    = f'https://{aws_region}.console.aws.amazon.com/amplify/#/{amplify_id}'
 
     if app_env == 'main':
         open_url = MAIN_URL
@@ -74,6 +76,7 @@ def build_message_data(event: dict) -> dict:
     )
 
     color = set_status_color(status)
+
 
     # Build message data
     message_data = {
@@ -105,6 +108,14 @@ def build_message_data(event: dict) -> dict:
         ]
     }
 
+    # Add additional button in case Amplify build fails
+    if status == 'FAILED':
+        message_data['attachments'][0]['actions'] += [{
+            'type': 'button',
+            'text': {'type': 'Open Amplify build', 'text': 'Link Button'},
+            'url': amplify_build_url,
+        }]
+
     return message_data
 
 
@@ -129,7 +140,6 @@ def set_status_color(status: str) -> str:
         color = '#808080'
 
     return color
-
 
 def send_slack_message(message: dict) -> None:
     '''_summary_

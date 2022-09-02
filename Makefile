@@ -1,7 +1,7 @@
 .PHONY: help build deploy test clean
 
 INFRA_DIR	:= ./infra/
-TEST_DIR 	:= ./tests/
+TEST_DIR 	:= ./amplify-notifications/tests
 
 help: ## shows Makefile commands
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
@@ -18,5 +18,7 @@ test:  ## runs tests
 	pytest ${TEST_DIR}
 
 clean: ## cleans artifacts
-	rm -rf infra/.aws-sam
-	rm infra/samconfig.toml
+	rm -rf infra/.aws-sam && \
+	rm infra/samconfig.toml && \
+	rm -r **/.pytest_cache && \
+	rm -r **/__pycache__

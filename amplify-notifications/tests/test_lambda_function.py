@@ -1,11 +1,14 @@
 import os
-import amplify_slack_notifications
+from src import amplify_slack_notifications
+
+# Env vars:
+# * HOOK_URL     = os.environ['WebhookUrl']
+# * MAIN_URL     = os.environ['MainUrl']
+# * DEV_URL      = os.environ['DevUrl']
+# * FALLBACK_URL = os.environ['FallbackUrl']
 
 
-# test-webhook sending to an empty or spammable channel
-WEBHOOK_URL = ''
-
-TEST_DATA = {
+TEST_EVENT = {
     "Records": [
         {
             "EventSource": "aws:sns",
@@ -65,9 +68,7 @@ def test_setting_data():
     THEN: set data accordingly
     '''
 
-    os.environ['WebhookUrl'] = WEBHOOK_URL
-
-    slack_message = amplify_slack_notifications.build_message_data(TEST_DATA, {})
+    slack_message = amplify_slack_notifications.build_message_data(TEST_EVENT, {})
     assert slack_message == BUILT_SLACK_MESSAGE
 
 
@@ -78,7 +79,7 @@ def test_send_slack_message():
     THEN: status is 200 OK
     '''
 
-    event = TEST_DATA
+    event = TEST_EVENT
     context = None
 
     payload = amplify_slack_notifications.handler(event, context)
