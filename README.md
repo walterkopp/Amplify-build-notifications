@@ -7,9 +7,21 @@
 Ever wanted simple yet cool AWS Amplify build notifications in Slack?
 Well here you go!
 
-![Slack preview](.assets/slack_preview.png)
+<details>
+  <summary>Slack previews</summary>
 
-> ℹ MS Teams coming soon
+![Slack preview - started](.assets/slack_preview_started.png)
+![Slack preview - succeed](.assets/slack_preview_succeed.png)
+![Slack preview - failed](.assets/slack_preview_failed.png)
+
+</details>
+
+<details>
+  <summary>MS Teams previews</summary>
+
+> ℹ coming soon
+
+</details>
 
 ## Table of contents
 
