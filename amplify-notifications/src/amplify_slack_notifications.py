@@ -54,7 +54,7 @@ def build_message_data(event: dict) -> dict:
     event_time           = f'{timestamp[0]} {event_time_timestamp[:-4]}'
     app_env              = re.search(r'arn:aws:sns:[\S]+:amplify-[\S]+_(\S+)', sns_topic_arn).group(1)
     amplify_id           = re.search(r'arn:aws:sns:[\S]+:amplify-(\S+)_', sns_topic_arn).group(1)
-    amplify_build_url    = f'https://{aws_region}.console.aws.amazon.com/amplify/#/{amplify_id}'
+    amplify_build_url    = f'https://{aws_region}.console.aws.amazon.com/amplify/#/{amplify_id}/{app_env}'
 
     if app_env == 'main':
         open_url = MAIN_URL
